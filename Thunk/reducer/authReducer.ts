@@ -1,4 +1,4 @@
-import { AnyAction } from "redux";
+import { AnyAction, Reducer, UnknownAction } from "redux";
 
 import {
     LOAD_USER,
@@ -8,7 +8,8 @@ import {
     LOGIN_REQUEST,
     LOGOUT
 }from '../actions/AuthAction';
-import { AuthState } from "./reducerTypes";
+import { AuthActions, AuthState } from "./reducerTypes";
+import { PayloadAction } from "@reduxjs/toolkit";
 
 const initialState:AuthState = {
     loading: false,
@@ -18,9 +19,9 @@ const initialState:AuthState = {
     success: null,
 }
 
-export const authReducer = (
+export const authReducer  = (
     state = initialState,
-    action: AnyAction,
+    action:AuthActions ,
   ): AuthState => {
 
     switch (action.type) {
