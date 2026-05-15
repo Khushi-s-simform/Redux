@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 import postsReducer from "../actions/postSlice";
 import { authReducer } from "../reducer/authReducer";
@@ -7,10 +7,10 @@ import logger from "redux-logger";
 
 export const store = configureStore({
 
-  reducer: {
+  reducer: combineReducers({
     posts: postsReducer,
-    auth:authReducer
-  },
+    auth : authReducer
+  }),
 
   middleware: (getDefaultMiddleware) =>
 
