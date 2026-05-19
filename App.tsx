@@ -1,41 +1,30 @@
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  SafeAreaView,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
-import Counter1 from './Redux_Basic/Counter1';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
+/* import Counter1 from './Redux_Basic/Counter1'; */
 /* import counterStore from './Redux_Basic/store/counterStore';
 import Layout from './Redux_Basic/Layout'; */
-
-import { store } from './Thunk/store/store';
-import PostsScreen from './Thunk/screens/postScreen';
+/* import { store } from './Thunk/store/store'; */
+/* import PostsScreen from './Thunk/screens/postScreen'; */
+/* import AuthScreen from './Toolkit/AuthScreen'; */
+/* import { store } from './Toolkit/store/store'; */
+/* import AppNavigator from './Toolkit/navigateLayout'; */
+import { store } from './RTK_Query/store/store';
+import PostScreen from './RTK_Query/postScreen';
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
   return (
     <SafeAreaProvider>
-       {/* <SafeAreaView edges={['top' , 'bottom']}>  */}
-
-     {/*  <Provider store={counterStore}>
-  
+      {/* THUNK example */}
+      {/*  <Provider store={counterStore}>
         <Layout />  
       </Provider> */}
 
-      {/* THUNK example */}
-
+      {/* Toolkit example */}
       <Provider store={store}>
-    {/*   <PostsScreen /> */}
+        <PostScreen/>
       </Provider>
-      
-{/*       </SafeAreaView>  */}
     </SafeAreaProvider>
   );
 }
-
-
 
 export default App;
