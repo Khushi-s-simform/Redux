@@ -64,7 +64,7 @@ export const loginUser =
   };
 
 export const registerUser =
-  (data: { name: string; email: string; password: string }) =>
+  (data: { username: string; email: string; password: string }) =>
   async (dispatch: AppDispatch): Promise<void> => {
     dispatch({
       type: LOGIN_REQUEST,
@@ -107,7 +107,7 @@ export const loadUser =
         });
       }
     } catch (error) {
-      console.log('Load User Error');
+      console.log('Load User Error',error);
     }
   };
 

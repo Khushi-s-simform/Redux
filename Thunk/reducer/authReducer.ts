@@ -1,5 +1,3 @@
-import { AnyAction, Reducer, UnknownAction } from "redux";
-
 import {
     LOAD_USER,
     LOGIN_FAIL,
@@ -9,7 +7,6 @@ import {
     LOGOUT
 }from '../actions/AuthAction';
 import { AuthActions, AuthState } from "./reducerTypes";
-import { PayloadAction } from "@reduxjs/toolkit";
 
 const initialState:AuthState = {
     loading: false,

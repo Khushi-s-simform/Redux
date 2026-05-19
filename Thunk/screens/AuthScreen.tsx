@@ -9,7 +9,6 @@ import {
   import React, { useState } from 'react';
   import { useDispatch, useSelector } from 'react-redux';
   import { loginUser, registerUser } from '../actions/AuthAction';
-  import { AuthState } from '../reducer/reducerTypes';
 import { RootState } from '../store/store';
   
   export default function AuthScreen() {

@@ -1,4 +1,3 @@
-import { View, Text } from 'react-native';
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -10,7 +9,6 @@ import ProfileScreen from './ProfileScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AuthScreen from './AuthScreen';
 import { AppDispatch, RootState, store } from '../store/store';
-import { AuthState } from '../reducer/reducerTypes';
 import { loadUser, logoutUser } from '../actions/AuthAction';
 import CustomeBtn from '../../Components/CustomeBtn';
 
@@ -37,7 +35,7 @@ const TabNav = () => {
             />
           );
         },
-        animation:'shift'
+        animation: 'shift',
       }}
     >
       <Tab.Screen
@@ -72,19 +70,18 @@ const TabNav = () => {
   );
 };
 
-
-
 const StackNav = () => {
   const { token } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(loadUser());
-  }, []);
+  }, [dispatch]);
   return (
     <Stack.Navigator
-    screenOptions={{
-      animation:'flip'
-    }}>
+      screenOptions={{
+        animation: 'flip',
+      }}
+    >
       {token ? (
         <Stack.Screen
           name="HOME"
