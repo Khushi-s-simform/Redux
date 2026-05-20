@@ -1,36 +1,59 @@
 import React from 'react';
+
 import {
   View,
   Text,
   FlatList,
   ActivityIndicator,
   StyleSheet,
+  Pressable,
 } from 'react-native';
 
-import { useGetPostsQuery } from './API/api';
+import { useDeletePostMutation, useGetPostsQuery } from './API/api';
 
 const PostScreen = () => {
-  const { data, error, isLoading, isFetching } = useGetPostsQuery();
+  const { data, isLoading, isFetching } = useGetPostsQuery();
+
+  const [deletePost] = useDeletePostMutation();
+
+  const handleDelete = async (id: number) => {
+    try {
+        await deletePost(id).unwrap();
+        console.log("post deleted");
+        
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   if (isLoading) {
-    return <ActivityIndicator size="large" />;
-  }
-
-  if (error) {
-    return <Text>Something went wrong</Text>;
+    return (
+      <View style={styles.loaderContainer}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
   }
 
   return (
     <View style={styles.container}>
-      {isFetching && <Text>Refreshing...</Text>}
+      {isFetching && <Text style={styles.refreshing}>Refreshing...</Text>}
 
       <FlatList
-        data={data}
+        data={data?.posts}
         keyExtractor={item => item.id.toString()}
+        showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
           <View style={styles.card}>
             <Text style={styles.title}>{item.title}</Text>
-            <Text>{item.body}</Text>
+
+            <Text style={styles.body}>{item.body}</Text>
+
+            <Pressable
+              style={styles.deleteButton}
+              onPress={() => handleDelete(item.id)}
+            >
+              <Text style={styles.deleteText}>Delete</Text>
+            </Pressable>
           </View>
         )}
       />
@@ -46,15 +69,45 @@ const styles = StyleSheet.create({
     padding: 10,
   },
 
-  card: {
-    backgroundColor: '#eee',
-    padding: 10,
+  loaderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  refreshing: {
     marginBottom: 10,
-    borderRadius: 8,
+    textAlign: 'center',
+  },
+
+  card: {
+    backgroundColor: '#eaeaea',
+    padding: 15,
+    marginBottom: 12,
+    borderRadius: 10,
   },
 
   title: {
+    fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 5,
+    marginBottom: 6,
+  },
+
+  body: {
+    fontSize: 14,
+  },
+
+  deleteButton: {
+    alignSelf: 'flex-end',
+    marginTop: 12,
+    backgroundColor: 'red',
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    borderRadius: 8,
+  },
+
+  deleteText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
 });
