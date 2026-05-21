@@ -25,6 +25,7 @@ import AddPostScreen from './AddPostScreen';
 
 import PostScreen from './postscreen';
 
+import ProfileScreen from './Profile';
 const Tab = createBottomTabNavigator();
 
 const Stack = createNativeStackNavigator();
@@ -76,7 +77,21 @@ const TabNav = () => {
             />
           ),
         }}
-      />
+          />
+          
+          <Tab.Screen
+              name="Profile"
+              component={ProfileScreen}
+              options={{
+                tabBarIcon: ({ color, focused }) => (
+                  <Icon
+                    name={focused ? 'user' : 'user'}
+                    size={22}
+                    color={color}
+                  />
+                ),
+              }}
+          />
     </Tab.Navigator>
   );
 };
