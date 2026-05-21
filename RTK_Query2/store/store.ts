@@ -1,35 +1,40 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { persistStore, persistReducer } from 'redux-persist';
+import logger from 'redux-logger';
+import { authReducer } from '../slice/authSlice';
+import { authApi } from '../api/AuthAPi';
+import { postApi } from '../api/postAPi';
 
-import { authReducer } from '../slice/authSlice'
+const authPersistConfig = {
+  key: 'auth',
+  storage: AsyncStorage,
+};
 
-import { authApi } from '../api/AuthAPi'
-
-import { postApi } from '../api/postAPi'
-import logger from 'redux-logger'
+const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 
 export const store = configureStore({
   reducer: {
-    // AUTH SLICE
-    auth: authReducer,
+    // PERSISTED AUTH
+    auth: persistedAuthReducer,
 
     // RTK QUERY APIs
-    [authApi.reducerPath]:
-      authApi.reducer,
+    [authApi.reducerPath]: authApi.reducer,
 
-    [postApi.reducerPath]:
-      postApi.reducer,
+    [postApi.reducerPath]: postApi.reducer,
   },
 
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(
-      authApi.middleware,
-      postApi.middleware,
-    ).concat(logger)
-})
+    getDefaultMiddleware({
+      serializableCheck: false,
+    })
+      .concat(authApi.middleware)
+      .concat(postApi.middleware)
+      .concat(logger),
+});
 
-export type RootState = ReturnType<
-  typeof store.getState
->
+export const persistor = persistStore(store);
 
-export type AppDispatch =
-  typeof store.dispatch
+export type RootState = ReturnType<typeof store.getState>;
+
+export type AppDispatch = typeof store.dispatch;

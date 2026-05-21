@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
 import {
   View,
@@ -7,58 +7,43 @@ import {
   Pressable,
   Text,
   StyleSheet,
-} from 'react-native'
+  KeyboardAvoidingView,
+} from 'react-native';
 
-import { useAddPostMutation } from '../api/postAPi'
+import { useAddPostMutation } from '../api/postAPi';
 
 const AddPostScreen = () => {
-  const [content, setContent] =
-    useState('')
+  const [content, setContent] = useState('');
 
-  const [
-    addPost,
-    { isLoading },
-  ] = useAddPostMutation()
+  const [addPost, { isLoading }] = useAddPostMutation();
 
   const handleAddPost = async () => {
     if (!content) {
-      Alert.alert(
-        'Validation',
-        'Enter content',
-      )
-  
-      return
-    }
-  
-    try {
-      const formData = new FormData()
-  
-      formData.append(
-        'content',
-        content,
-      )
-  
-      await addPost(
-        formData,
-      ).unwrap()
-  
-      Alert.alert(
-        'Success',
-        'Post Added',
-      )
-  
-      setContent('')
-    } catch (error) {
-      console.log(error)
-  
-      Alert.alert(
-        'Error',
-        'Post creation failed',
-      )
-    }
-  }
+      Alert.alert('Validation', 'Enter content');
 
-  return (
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+
+      formData.append('content', content);
+
+      await addPost(formData).unwrap();
+
+      Alert.alert('Success', 'Post Added');
+
+      setContent('');
+    } catch (error) {
+      console.log(error);
+
+      Alert.alert('Error', 'Post creation failed');
+    }
+  };
+
+    return (
+      <KeyboardAvoidingView  behavior='padding' style={{flex:1}}>
+            
     <View style={styles.container}>
       <TextInput
         placeholder="Enter post content"
@@ -68,25 +53,23 @@ const AddPostScreen = () => {
         multiline
       />
 
-      <Pressable
-        style={styles.button}
-        onPress={handleAddPost}>
+      <Pressable style={styles.button} onPress={handleAddPost}>
         <Text style={styles.buttonText}>
-          {isLoading
-            ? 'Adding...'
-            : 'Add Post'}
+          {isLoading ? 'Adding...' : 'Add Post'}
         </Text>
       </Pressable>
     </View>
-  )
-}
+      </KeyboardAvoidingView>
+  );
+};
 
-export default AddPostScreen
+export default AddPostScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+        padding: 20,
+    
   },
 
   input: {
@@ -111,4 +94,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
-})
+});
