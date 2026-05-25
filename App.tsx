@@ -8,11 +8,15 @@ import Layout from './Redux_Basic/Layout'; */
 /* import AuthScreen from './Toolkit/AuthScreen'; */
 /* import { store } from './Toolkit/store/store'; */
 /* import AppNavigator from './Toolkit/navigateLayout'; */
-import { store } from './RTK_Query/store/store';
+/* import { store } from './RTK_Query/store/store'; */
 /* import PostScreen from './RTK_Query/postScreen';
 import AddPostScreen from './RTK_Query/AddPost';*/
 /* import TabNavigator from './RTK_Query/TabNavigator'; */
-import HomeScreen from './RTK_Query2/screens/HomeScreen';
+/* import HomeScreen from './RTK_Query2/screens/HomeScreen'; */
+
+import { store } from './Saga/store/store';
+/* import AuthScreen from './Saga/screens/authScreen'; */
+import SagaLayout from './Saga/screens/LayoutScreen';
 
 function App() {
   return (
@@ -24,10 +28,8 @@ function App() {
 
       {/* Toolkit example */}
       <Provider store={store}>
-  
-         <HomeScreen />
 
-   {/*      <AddPostScreen /> */}
+        <SagaLayout />
       </Provider>
     </SafeAreaProvider>
   );

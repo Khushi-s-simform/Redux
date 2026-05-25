@@ -77,21 +77,17 @@ const TabNav = () => {
             />
           ),
         }}
-          />
-          
-          <Tab.Screen
-              name="Profile"
-              component={ProfileScreen}
-              options={{
-                tabBarIcon: ({ color, focused }) => (
-                  <Icon
-                    name={focused ? 'user' : 'user'}
-                    size={22}
-                    color={color}
-                  />
-                ),
-              }}
-          />
+      />
+
+      <Tab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          tabBarIcon: ({ color, focused }) => (
+            <Icon name={focused ? 'user' : 'user'} size={22} color={color} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 };
